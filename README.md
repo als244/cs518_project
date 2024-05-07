@@ -4,7 +4,10 @@
 
 First-stab at an accelerator-native "memory layer" in the context of a sptatiotemporal sharing system.
 
-The structure of this repo is incomplete: there are 3 different makefiles for the various backends. Basic functionality tested and working correctly on:
+The structure of this repo is incomplete: there are 3 different makefiles for the various backends. The general-flow of the project will live-on, but many of these files and data-structures will be cleaned up and the interfaces polished for production use. 
+
+Basic functionality (example_client.c) tested and working correctly the various backends:
+
 - Nvidia GPU:
 	- Hardware: Nvidia 3090
 	- Runtime: CUDA 12.4
