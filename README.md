@@ -5,9 +5,21 @@
 First-stab at an accelerator-native "memory layer" in the context of a sptatiotemporal sharing system.
 
 The structure of this repo is incomplete: there are 3 different makefiles for the various backends. Basic functionality tested and working correctly on:
-	- Hardware: Nvidia 3090, Runtime: CUDA 12.4, Driver: Open Kernel Modules 550, OS: Ubuntu 22.04/Linux 6.5.0-28-generic
-	- Hardware: AMD 7900XT, Runtime: ROCm 6.1, Driver: amdgpu 6.1, OS: Ubuntu 22.04/Linux 6.5.0-28-generic
-	- Hardware: Intel Arc A770, Runtime: Level Zero 1.9.2, Driver: i915 24.1.11, OS: Ubuntu 22.04/Linux 6.5.0-28-generic 
+- Nvidia GPU:
+	- Hardware: Nvidia 3090
+	- Runtime: CUDA 12.4
+	- Driver: Open Kernel Modules 550
+	- OS: Ubuntu 22.04/Linux 6.5.0-28-generic
+- AMD GPU:
+	- Hardware: AMD 7900XT
+	- Runtime: ROCm 6.1
+	- Driver: amdgpu 6.1
+	- OS: Ubuntu 22.04/Linux 6.5.0-28-generic
+- Intel GPU:
+	- Hardware: Intel Arc A770
+	- Runtime: Level Zero 1.9.2
+	- Driver: i915 24.1.11
+	- OS: Ubuntu 22.04/Linux 6.5.0-28-generic 
 
 Notes:
 
