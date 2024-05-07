@@ -30,4 +30,7 @@ Notes:
 
 - In our on-going project (and the blog post description) we have altered the design for allocating physical memory. In this repo you see that all physical memory is created at system init time. These chunks are engulfed by the system in the same manner as traditional pages. However, this incurs significant overhead when doing "reads" because the backing mapping operations are constant with respect to chunk size, so it is preferable to allocate physical memory chunks as the page-aligned size of the logical chunk itself. The tradeoff is that this strategy incurs a longer put() latency due to calls to the driver to allocate memory. In our new scheme, we rely on tracking the count of free frames and the backend driver's physical memory manager more critically than in this repo. 
 
-- The backend virtual memory management functions are benchmarked below. 
+- This version does not handle releasing physical memory, but this is essential functionality
+
+- The backend virtual memory management functions used in this repo are benchmarked below:
+	- ***TODO: Add latency vs. size plots for the 6 core VMM functions (create physical memory, export phys mem, import phys mem, reserve VA space, memory mapping, & setting access) for each backend***  
