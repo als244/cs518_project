@@ -53,11 +53,10 @@ int example_client(Server * server){
 
 	printf("Object has id: %lu\n", obj_id);
 
-	printf("Synchronizing so writes complete...\n");
+	printf("Sleeping for 10 seconds...\n");
+	sleep(10);
 
-	hipDeviceSynchronize();
-
-	printf("Finished sync. Now pullting object with id: %lu\n", obj_id);
+	printf("Now pullting object with id: %lu\n", obj_id);
 
 	uint64_t ret_obj_size;
 	// will be a device pointer, but was set accessible from host (cpu) agent!
