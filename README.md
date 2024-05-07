@@ -33,4 +33,4 @@ Notes:
 - This version does not handle releasing physical memory, but this is essential functionality
 
 - The backend virtual memory management functions used in this repo are benchmarked below:
-	- ***TODO: Add latency vs. size plots for the 6 core VMM functions (create physical memory, export phys mem, import phys mem, reserve VA space, memory mapping, & setting access) for each backend***  
+	- ***TODO: Add latency vs. size plots for the 4 core VMM functions (create physical memory, reserve VA space, memory mapping, & setting access) for each backend***  
