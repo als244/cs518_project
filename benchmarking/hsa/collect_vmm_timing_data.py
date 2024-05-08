@@ -1,4 +1,5 @@
 import os
+import time
 
 PAGE_SIZE = 1 << 21
 ALLOCATION_SIZES = [i * (PAGE_SIZE) for i in range(1, 8193)]
@@ -9,6 +10,9 @@ def main():
 
 	total_cnt = N_REPEAT * len(ALLOCATION_SIZES)
 	next_pct = 1
+
+	## sleep for 1 second after every timing run for control reasons...
+	sleep_time = 1
 
 	cnt = 0
 	for size in ALLOCATION_SIZES:
@@ -35,6 +39,8 @@ def main():
 			if (100 * (cnt / total_cnt)) >= next_pct:
 				print("Progress: " + str(next_pct) + "%")
 				next_pct += 1
+			time.sleep(sleep_time)
+
 
 
 if __name__ == "__main__":
