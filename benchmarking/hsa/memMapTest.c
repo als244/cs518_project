@@ -498,9 +498,6 @@ int main(int argc, char *argv[]) {
 	elapsed = timestamp_stop - timestamp_start;
 	printf("%ld\n,", elapsed);
 
-	printf("Sleeping for a while to sit and analyze if memory is truly released...");
-	sleep(5 * 60);
-
 	return 0;
 
 }
