@@ -496,7 +496,7 @@ int main(int argc, char *argv[]) {
 	clock_gettime(CLOCK_REALTIME, &stop);
 	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
 	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld\n,", elapsed);
+	printf("%ld\n", elapsed);
 
 	return 0;
 
