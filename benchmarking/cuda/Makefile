@@ -1,15 +1,18 @@
 CC = gcc
 CFLAGS = -O2
 
-CUDA_HEADER = /usr/local/cuda/include
-export C_INCLUDE_PATH=$(CUDA_HEADER)
+CUDA_INCLUDE = -I /usr/local/cuda/include
+### Default paths that system reads from, 
+### but being explicit for commonality across backends
+CUDA_LIB = -L /usr/local/cuda/lib -lcuda
 
-EXECS = memMapTest
+EXECS = cuda_memMapTest
 
 all: $(EXECS)
 
-memMapTest: memMapTest.c
-	$(CC) $(CFLAGS) memMapTest.c -o memMapTest -lcuda
+cuda_memMapTest: memMapTest.c
+	$(CC) $(CFLAGS) memMapTest.c -o cuda_memMapTest $(CUDA_INCLUDE) $(CUDA_LIB)
 
 clean:
 	rm -f *.o $(EXECS)
+
