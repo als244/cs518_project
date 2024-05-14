@@ -366,6 +366,7 @@ int main(int argc, char *argv[]) {
 	ze_physical_mem_handle_t phys_mem_handle;
 	ret = ze_allocate_phys(ze_context, alloc_size, &phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -413,6 +414,7 @@ int main(int argc, char *argv[]) {
 	uint64_t va_range_size = alloc_size;
 	ret = reserve_va_space(ze_context, va_range_size, &va_ptr);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -428,6 +430,7 @@ int main(int argc, char *argv[]) {
 	uint64_t map_size = alloc_size;
 	ret = mem_map(ze_context, map_size, va_ptr, phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -442,6 +445,7 @@ int main(int argc, char *argv[]) {
 
 	ret = set_access(ze_context, va_range_size, va_ptr);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -455,6 +459,7 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = mem_unmap(ze_context, va_ptr, va_range_size);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -468,6 +473,7 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = free_va_space(ze_context, va_ptr, va_range_size);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -509,12 +515,13 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = release_phys_mem(ze_context, phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
 	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
 	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld\n,", elapsed);
+	printf("%ld\n", elapsed);
 
 	return 0;
 
