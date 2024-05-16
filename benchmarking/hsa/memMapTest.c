@@ -339,6 +339,7 @@ int main(int argc, char *argv[]) {
 	hsa_amd_vmem_alloc_handle_t phys_mem_handle;
 	ret = hsa_allocate_phys(agents, gpu_agent_id, main_pool_id, alloc_size, &phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -346,36 +347,40 @@ int main(int argc, char *argv[]) {
 	elapsed = timestamp_stop - timestamp_start;
 	printf("%ld,", elapsed);
 
+
+	// SKIPPING 2 & 3 to stay consistent with Cuda and Level Zero
 
 	// 2. Exporting to Shareable Handle
-	clock_gettime(CLOCK_REALTIME, &start);
-	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
+	// clock_gettime(CLOCK_REALTIME, &start);
+	// timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 
-	int dmabuf_fd;
-	ret = hsa_export_to_dmabuf(phys_mem_handle, &dmabuf_fd);
-	if (ret != 0){
-		exit(1);
-	}
+	// int dmabuf_fd;
+	// ret = hsa_export_to_dmabuf(phys_mem_handle, &dmabuf_fd);
+	// if (ret != 0){
+	//	printf("\n");
+	// 	exit(1);
+	// }
 
-	clock_gettime(CLOCK_REALTIME, &stop);
-	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
-	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld,", elapsed);
+	// clock_gettime(CLOCK_REALTIME, &stop);
+	// timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
+	// elapsed = timestamp_stop - timestamp_start;
+	// printf("%ld,", elapsed);
 
 
-	// 3. Importing from Shareable Handle
-	clock_gettime(CLOCK_REALTIME, &start);
-	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
+	// // 3. Importing from Shareable Handle
+	// clock_gettime(CLOCK_REALTIME, &start);
+	// timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 
-	hsa_amd_vmem_alloc_handle_t imported_handle;
-	ret = import_from_dmabuf(dmabuf_fd, &imported_handle);
-	if (ret != 0){
-		exit(1);
-	}
-	clock_gettime(CLOCK_REALTIME, &stop);
-	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
-	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld,", elapsed);
+	// hsa_amd_vmem_alloc_handle_t imported_handle;
+	// ret = import_from_dmabuf(dmabuf_fd, &imported_handle);
+	// if (ret != 0){
+	//	printf("\n");
+	// 	exit(1);
+	// }
+	// clock_gettime(CLOCK_REALTIME, &stop);
+	// timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
+	// elapsed = timestamp_stop - timestamp_start;
+	// printf("%ld,", elapsed);
 
 
 	// 4. Reserving VA Space
@@ -386,6 +391,7 @@ int main(int argc, char *argv[]) {
 	uint64_t va_range_size = alloc_size;
 	ret = reserve_va_space(va_range_size, &va_ptr);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -401,6 +407,7 @@ int main(int argc, char *argv[]) {
 	uint64_t map_size = alloc_size;
 	ret = mem_map(map_size, va_ptr, phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -425,6 +432,7 @@ int main(int argc, char *argv[]) {
 
 	ret = set_access(va_range_size, va_ptr, desc_cnt, accessDescriptors);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -438,6 +446,7 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = mem_unmap(va_ptr, va_range_size);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -451,6 +460,7 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = free_va_space(va_ptr, va_range_size);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
@@ -461,29 +471,33 @@ int main(int argc, char *argv[]) {
 	// NOTE
 	//	- physical memory is only freed after all dmabuf_fd's are closed, all imported handles are released, and the original handle is released
 
+	// SKIPPING 8 & 9 to stay consistent with Cuda and Level Zero 
+
 	// 9. Close the imported dmabuf
-	clock_gettime(CLOCK_REALTIME, &start);
-	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
-	ret = close_shareable_handle(dmabuf_fd);
-	if (ret != 0){
-		exit(1);
-	}
-	clock_gettime(CLOCK_REALTIME, &stop);
-	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
-	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld,", elapsed);
+	// clock_gettime(CLOCK_REALTIME, &start);
+	// timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
+	// ret = close_shareable_handle(dmabuf_fd);
+	// if (ret != 0){
+	//	printf("\n");
+	// 	exit(1);
+	// }
+	// clock_gettime(CLOCK_REALTIME, &stop);
+	// timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
+	// elapsed = timestamp_stop - timestamp_start;
+	// printf("%ld,", elapsed);
 
 	// 10. Release imported physical memory
-	clock_gettime(CLOCK_REALTIME, &start);
-	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
-	ret = release_phys_mem(imported_handle);
-	if (ret != 0){
-		exit(1);
-	}
-	clock_gettime(CLOCK_REALTIME, &stop);
-	timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
-	elapsed = timestamp_stop - timestamp_start;
-	printf("%ld,", elapsed);
+	// clock_gettime(CLOCK_REALTIME, &start);
+	// timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
+	// ret = release_phys_mem(imported_handle);
+	// if (ret != 0){
+	//	printf("\n");
+	// 	exit(1);
+	// }
+	// clock_gettime(CLOCK_REALTIME, &stop);
+	// timestamp_stop = stop.tv_sec * 1e9 + stop.tv_nsec;
+	// elapsed = timestamp_stop - timestamp_start;
+	// printf("%ld,", elapsed);
 
 	
 	// 11. Finally release the physical allocation which creates free page frames
@@ -491,6 +505,7 @@ int main(int argc, char *argv[]) {
 	timestamp_start = start.tv_sec * 1e9 + start.tv_nsec;
 	ret = release_phys_mem(phys_mem_handle);
 	if (ret != 0){
+		printf("\n");
 		exit(1);
 	}
 	clock_gettime(CLOCK_REALTIME, &stop);
