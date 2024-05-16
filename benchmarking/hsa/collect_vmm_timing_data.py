@@ -3,8 +3,8 @@ import time
 
 PAGE_SIZE = 1 << 21
 ALLOCATION_SIZES = [i * (PAGE_SIZE) for i in range(1, 8193)]
-N_REPEAT = 100
-OUTPUT_FILENAME = "more_hsa_vmm_timing_data.csv"
+N_REPEAT = 10
+OUTPUT_FILENAME = "hsa_vmm_timing_data.csv"
 
 def main():
 
